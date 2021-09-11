@@ -5,23 +5,34 @@ import {
 } from './src/blockchain.js'
 import { inspect } from 'util'
 
-const amount = '0.00756'
-const currency = 'CRSTK'
-const sender = '3FZbgi29cpjq2GjdwV8eyHuJJnkLtktZc5'
-const receiver = '3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy'
+function stringGen(len) {
+    let text = "3"
+    const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+    
+    for (let i=0; i<len; i++) {
+        text += charset.charAt(Math.floor(Math.random() * charset.length))
+    }
+    
+    return text
+}
 
 let chain = [generateGenesisBlock()]
 
 console.log(inspect({chain}, { depth: null }))
 
-chain = addBlock(chain, {
-    sender,
-    receiver,
-    amount,
-    currency
-})
+for (let i=0; i<=20; ++i) {
+    const calc = Math.floor(
+        Math.random() * (10 * 200 - 1 * 200) + 1 * 200
+    ) / (1 * 200)
+
+    chain = addBlock(chain, {
+        sender: stringGen(33),
+        receiver: stringGen(33),
+        amount: calc,
+        currency: 'CRSTK'
+    })    
+}
 
 console.log(inspect({chain}, { depth: null }))
-
-console.log(inspect(validateBlockChain(chain), { depth: null }))
+console.log(inspect({ valid: validateBlockChain(chain) }, { depth: null }))
 
