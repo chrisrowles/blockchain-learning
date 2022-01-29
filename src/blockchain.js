@@ -1,5 +1,21 @@
 import sha256 from 'crypto-js/sha256.js'
 
+/**
+ * Generate block 0 of the chain.
+ * 
+ * Creates the block, calculates the first hash for said block, merges the hash with the block object,
+ * then returns it. E.g.
+ * 
+ * ```js
+ * {
+ *    timestamp: 1643441631070,
+ *    data: 'Genesis Block',
+ *    previousHash: '0',
+ *    hash: 'e3feb361c230ce901e67ec4a8708f2f7ea1e0d4a47b8ba2e0551d473c179bc05'
+ * }
+ * ```
+ * @returns {object}
+ */
 export function generateGenesisBlock() {
     const block = {
         timestamp: + new Date(),
@@ -7,17 +23,28 @@ export function generateGenesisBlock() {
         previousHash: '0'
     }
 
+    console.log({block})
+
     return {
         ...block,
         hash: calculateBlockHash(block)
     }
 }
 
+/**
+ * Calculate the next block and add it to the chain.
+ * 
+ * 
+ * @param {*} chain 
+ * @param {*} data 
+ * @returns 
+ */
 export function addBlock(chain, data) {
-    const {
-        hash: previousHash
-    } = chain[chain.length - 1];
+    // Grab the previousHash property from the previous block on the chain
+    // and assign it to this new block's hash property
+    const {hash: previousHash} = chain[chain.length - 1];
     
+    // Create the new block, note that the previous Hash 
     const block = {
         timestamp: + new Date(),
         data,

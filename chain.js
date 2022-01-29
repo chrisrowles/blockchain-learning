@@ -3,24 +3,15 @@ import {
     addBlock,
     validateBlockChain
 } from './src/blockchain.js'
-import { inspect } from 'util'
 
-function stringGen(len) {
-    let text = "3"
-    const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-    
-    for (let i=0; i<len; i++) {
-        text += charset.charAt(Math.floor(Math.random() * charset.length))
-    }
-    
-    return text
-}
+import { log, stringGen } from './src/utils.js'
 
+// Generate block 0 and output to console
 let chain = [generateGenesisBlock()]
+log(chain, { depth: null })
 
-console.log(inspect({chain}, { depth: null }))
-
-for (let i=0; i<=20; ++i) {
+// Begin adding more blocks
+for (let i=0; i<=5; ++i) {
     const calc = Math.floor(
         Math.random() * (10 * 200 - 1 * 200) + 1 * 200
     ) / (1 * 200)
@@ -33,6 +24,7 @@ for (let i=0; i<=20; ++i) {
     })    
 }
 
-console.log(inspect({chain}, { depth: null }))
-console.log(inspect({ valid: validateBlockChain(chain) }, { depth: null }))
+// Output chain to console
+log({chain}, { depth: null })
+log({valid: validateBlockChain(chain)}, { depth: null })
 
