@@ -57,7 +57,7 @@ const sumBelowNumberRecursiveTrampoline = (number, sum = 0) => {
     }
 }
 
-// Should be 15, e.g. 5+4+3+2+1 = 15
+// Define our trampoline method for summing all the numbers below the given number
 const sumBelow = trampoline(sumBelowNumberRecursiveTrampoline)
 
 
